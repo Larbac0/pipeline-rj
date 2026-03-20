@@ -5,7 +5,17 @@ from dotenv import load_dotenv
 import os
 
 load_dotenv()
+
 engine = create_engine(os.getenv('DB_URL'))
+
+
+# Dados atuais — último registro da tabela raw
+atual = pd.read_sql("""
+    SELECT temperatura, vento, chuva, coletado_em
+    FROM weather_raw
+    ORDER BY coletado_em DESC
+    LIMIT 1
+""", engine).iloc[0]
 
 st.set_page_config(page_title='Pipeline RJ — Clima & Câmbio', layout='wide')
 st.title('Rio de Janeiro — Clima & Câmbio')
@@ -16,8 +26,8 @@ cambio = pd.read_sql("SELECT * FROM exchange_analytics ORDER BY hora", engine)
 
 # Métricas no topo
 c1, c2, c3, c4 = st.columns(4)
-c1.metric("Temp. média", f"{clima['temp_media'].mean():.1f} °C")
-c2.metric("Vento médio", f"{clima['vento_medio'].mean():.1f} km/h")
+c1.metric("Temperatura atual", f"{atual['temperatura']:.1f} °C")
+c2.metric("Vento atual", f"{atual['vento']:.1f} km/h")
 c3.metric("USD/BRL médio", f"R$ {cambio['usd_medio'].mean():.2f}")
 c4.metric("EUR/BRL médio", f"R$ {cambio['eur_medio'].mean():.2f}")
 
@@ -51,3 +61,21 @@ st.divider()
 st.subheader("Visão combinada — Clima + Câmbio por hora")
 combined = pd.read_sql("SELECT * FROM combined_analytics ORDER BY hora", engine)
 st.dataframe(combined, use_container_width=True)
+
+# Ações
+st.divider()
+st.subheader("Ações B3 — Fechamento mais recente")
+
+acoes = pd.read_sql("SELECT * FROM stocks_analytics", engine)
+
+col_a, col_b, col_c = st.columns(3)
+for i, row in acoes.iterrows():
+    col = [col_a, col_b, col_c][i]
+    variacao = round(row['fechamento'] - row['abertura'], 2)
+    col.metric(
+        label=row['ticker'],
+        value=f"R$ {row['fechamento']:.2f}",
+        delta=f"{variacao:+.2f}"
+    )
+
+st.dataframe(acoes[['ticker','abertura','fechamento','maxima','minima','volume']], use_container_width=True)
