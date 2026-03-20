@@ -34,40 +34,6 @@ CamadaTecnologiaFunçãoColetan8n + Open-Meteo + AwesomeAPIWorkflows agendados b
 Open-Meteo — API de clima gratuita, sem autenticação, coordenadas do Rio de Janeiro
 AwesomeAPI — API brasileira de câmbio, sem autenticação, pares USD/BRL, EUR/BRL, BTC/BRL
 
-
-🚀 Como rodar localmente
-Pré-requisitos
-
-Python 3.10+
-PostgreSQL 14+
-n8n (self-hosted via Docker ou VirtualBox)
-
-1. Clone o repositório
-bashgit clone https://github.com/seu-usuario/pipeline-rj.git
-cd pipeline-rj
-2. Configure o banco de dados
-Acesse o PostgreSQL e execute:
-bashpsql -U postgres -f db/setup.sql
-3. Instale as dependências Python
-bashpython3 -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
-4. Configure as variáveis de ambiente
-Crie um arquivo .env na raiz:
-envDB_URL=postgresql://pipeline_user:senha123@localhost/pipeline_dados
-5. Importe os workflows no n8n
-
-Acesse o painel do n8n
-Importe n8n/workflow_clima.json
-Importe n8n/workflow_cambio.json
-Ative os dois workflows
-
-6. Execute o ETL
-bashpython etl.py
-7. Suba o dashboard
-bashstreamlit run app.py
-Acesse em http://localhost:8501
-
 📁 Estrutura do projeto
 pipeline-rj/
 ├── n8n/
