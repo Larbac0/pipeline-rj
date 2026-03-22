@@ -36,3 +36,48 @@ Clima: 13 registros | Câmbio: 555 registros
 ETL finalizado com sucesso.
 Clima: 13 registros | Câmbio: 629 registros
 ETL finalizado com sucesso.
+Clima: 14 | Câmbio: 689 | Ações: 3
+ETL finalizado com sucesso.
+Clima: 15 | Câmbio: 749 | Ações: 16
+ETL finalizado com sucesso.
+Clima: 16 | Câmbio: 809 | Ações: 16
+ETL finalizado com sucesso.
+Clima: 17 | Câmbio: 869 | Ações: 16
+ETL finalizado com sucesso.
+Clima: 18 | Câmbio: 929 | Ações: 16
+ETL finalizado com sucesso.
+Clima: 18 | Câmbio: 989 | Ações: 16
+ETL finalizado com sucesso.
+Clima: 19 | Câmbio: 1049 | Ações: 16
+ETL finalizado com sucesso.
+Clima: 20 | Câmbio: 1109 | Ações: 16
+ETL finalizado com sucesso.
+Clima: 20 | Câmbio: 1169 | Ações: 16
+ETL finalizado com sucesso.
+Clima: 21 | Câmbio: 1229 | Ações: 16
+ETL finalizado com sucesso.
+Clima: 22 | Câmbio: 1289 | Ações: 16
+ETL finalizado com sucesso.
+Clima: 23 | Câmbio: 1349 | Ações: 16
+ETL finalizado com sucesso.
+Clima: 24 | Câmbio: 1409 | Ações: 16
+ETL finalizado com sucesso.
+Clima: 24 | Câmbio: 1469 | Ações: 16
+ETL finalizado com sucesso.
+Clima: 25 | Câmbio: 1530 | Ações: 16
+ETL finalizado com sucesso.
+Clima: 26 | Câmbio: 1590 | Ações: 16
+ETL finalizado com sucesso.
+Clima: 27 | Câmbio: 1650 | Ações: 16
+ETL finalizado com sucesso.
+Clima: 28 | Câmbio: 1710 | Ações: 16
+ETL finalizado com sucesso.
+Clima: 29 | Câmbio: 1770 | Ações: 16
+ETL finalizado com sucesso.
+Clima: 30 | Câmbio: 1828 | Ações: 16
+ETL finalizado com sucesso.
+Clima: 30 | Câmbio: 1866 | Ações: 16
+ETL finalizado com sucesso.
+  File "/home/larbac0/pipeline-rj/etl.py", line 39
+    df_acoes['data'] = pd.to_datetime(df_acoes['coletado_em']).dt.date
+IndentationError: unexpected indent

@@ -6,7 +6,7 @@ from datetime import datetime
 
 load_dotenv('/home/larbac0/pipeline-rj/.env')
 
-tickers = ['PETR4.SA', 'VALE3.SA', 'ITUB4.SA']
+tickers = ['PETR3.SA', 'PETR4.SA', 'VALE3.SA', 'ITUB4.SA', 'BBDC4.SA', 'MGLU3.SA', 'WEGE3.SA']
 
 conn = psycopg2.connect(os.getenv('DB_URL'))
 cur = conn.cursor()

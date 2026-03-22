@@ -32,19 +32,29 @@ def transform(df_clima, df_cambio, df_acoes):
     ).reset_index()
 
     df_combined = pd.merge(clima_hora, cambio_hora, on='hora', how='inner')
-   
+
     acoes_atual = df_acoes.sort_values('coletado_em').groupby('ticker').last().reset_index()
 
-    return clima_hora, cambio_hora, df_combined, acoes_atual
+    df_acoes['data'] = pd.to_datetime(df_acoes['coletado_em']).dt.date
+    acoes_historico = df_acoes.groupby(['ticker', 'data']).agg(
+        abertura   = ('abertura', 'first'),
+        fechamento = ('fechamento', 'last'),
+        maxima     = ('maxima', 'max'),
+        minima     = ('minima', 'min'),
+        volume     = ('volume', 'sum')
+    ).reset_index()
 
-def load(clima_hora, cambio_hora, df_combined, acoes_atual):
+    return clima_hora, cambio_hora, df_combined, acoes_atual, acoes_historico
+
+def load(clima_hora, cambio_hora, df_combined, acoes_atual, acoes_historico):
     clima_hora.to_sql('weather_analytics',  engine, if_exists='replace', index=False)
     cambio_hora.to_sql('exchange_analytics', engine, if_exists='replace', index=False)
     df_combined.to_sql('combined_analytics', engine, if_exists='replace', index=False)
     acoes_atual.to_sql('stocks_analytics',   engine, if_exists='replace', index=False)
+    acoes_historico.to_sql('stocks_historico', engine, if_exists='replace', index=False)
     print("ETL finalizado com sucesso.")
 
 if __name__ == '__main__':
     df_clima, df_cambio, df_acoes = extract()
-    clima_hora, cambio_hora, combined, acoes_atual = transform(df_clima, df_cambio, df_acoes)
-    load(clima_hora, cambio_hora, combined, acoes_atual)
+    clima_hora, cambio_hora, combined, acoes_atual, acoes_historico = transform(df_clima, df_cambio, df_acoes)
+    load(clima_hora, cambio_hora, combined, acoes_atual, acoes_historico)
